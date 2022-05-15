@@ -1,18 +1,16 @@
-import React from 'react'
-import Announcment from '../../componenets/UI/Announcment'
-import Navbar from '../../componenets/UI/Navbar'
-import Footer from '../../componenets/UI/Footer'
+import Layout from '../../componenets/Layout';
 import ProductDetails from '../../componenets/Products/ProductDetails'
 
 const productDetails = () => {
   return (
     <>
-    <Announcment/>
-    <Navbar />
     <ProductDetails/>
-    <Footer/>
     </>
   )
 }
+
+productDetails.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
 export default productDetails

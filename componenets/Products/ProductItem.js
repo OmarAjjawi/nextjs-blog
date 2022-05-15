@@ -8,7 +8,7 @@ const ProductItem = (props) => {
   return (
     <div className={classes.container}>
         <div className={classes.circle}></div>
-        <img src={props.image}/>
+        <img src={`http://localhost:8000/storage/product/image/${props.image}`}/>
         <div className={classes.info} onClick={() => router.push('/products/productDetails')}>
             <div className={classes.icon}>
                 <ShoppingCartOutlined />

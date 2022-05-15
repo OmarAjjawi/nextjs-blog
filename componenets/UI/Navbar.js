@@ -5,9 +5,13 @@ import React from "react";
 import classes from "./Navbar.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAuth } from "../../hooks/auth";
+import Logout from "@mui/icons-material/Logout";
 
 const Navbar = () => {
   const router = useRouter();
+  const { logout } = useAuth();
+  const { user } = useAuth();
 
   return (
     <div className={classes.container}>
@@ -18,25 +22,52 @@ const Navbar = () => {
             <Input placeholder="search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </div>
+          <div style={{ paddingLeft: "5px" }}>
+            {user?.name ? (
+              <p>
+                Welcome <b>{user.name}</b>
+              </p>
+            ) : (
+              <p>Welcome Guest</p>
+            )}
+          </div>
         </div>
         <div className={classes.center}>
-          <h1 className={classes.logo} onClick={() => router.push('/')}>Lebanese Anime Corner.</h1>
+          <h1 className={classes.logo} onClick={() => router.push("/")}>
+            Lebanese Anime Corner.
+          </h1>
         </div>
         <div className={classes.right}>
-        <div className={classes["menu-item"]}>
+          {user?.name && (
+            <div className={classes["menu-item"]}>
+              <Link href="/admin/list">ADMIN</Link>
+            </div>
+          )}
+          <div className={classes["menu-item"]}>
             <Link href="/products">BROWSE</Link>
           </div>
-          <div className={classes["menu-item"]}>
-            <Link href="/register">REGISTER</Link>
-          </div>
-          <div className={classes["menu-item"]}>
-            <Link href="/login">LOGIN</Link>
-          </div>
-          <div className={classes["menu-item"]}>
-            <Badge badgeContent={4} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </div>
+          {!user?.name && (
+            <div className={classes["menu-item"]}>
+              <Link href="/register">REGISTER</Link>
+            </div>
+          )}
+          {!user?.name && (
+            <div className={classes["menu-item"]}>
+              <Link href="/login">LOGIN</Link>
+            </div>
+          )}
+          {user?.name && (
+            <div className={classes["menu-item"]}>
+              <Logout onClick={logout} />
+            </div>
+          )}
+          {user?.name && (
+            <div className={classes["menu-item"]}>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </div>
+          )}
         </div>
       </div>
     </div>
